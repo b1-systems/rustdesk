@@ -1943,7 +1943,9 @@ jobs:
       - build-rustdesk-linux
       - build-rustdesk-linux-sciter
     runs-on: ${{ matrix.job.on }}
-    if: ${{ inputs.upload-artifact }}
+    # if: ${{ inputs.upload-artifact }}
+    if: false
+    # disable for now, because the job runs forever in some situations
     strategy:
       fail-fast: false
       matrix:
