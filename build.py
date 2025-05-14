@@ -292,7 +292,7 @@ def generate_control_file(version):
     control_file_path = "../res/DEBIAN/control"
     system2('/bin/rm -rf %s' % control_file_path)
 
-    content = """Package: rustdesk-connect
+    content = """Package: rustdesk
 Section: net
 Priority: optional
 Version: %s
