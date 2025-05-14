@@ -360,7 +360,7 @@ def build_flutter_deb(version, features):
 
     system2('/bin/rm -rf tmpdeb/')
     system2('/bin/rm -rf ../res/DEBIAN/control')
-    os.rename('rustdesk.deb', '../rustdesk-connect_%s-1_%s.deb' % (version, get_deb_arch()))
+    os.rename('rustdesk.deb', '../rustdesk_%s-1_%s.deb' % (version, get_deb_arch()))
     os.chdir("..")
 
 
@@ -397,7 +397,7 @@ def build_deb_from_folder(version, binary_folder):
 
     system2('/bin/rm -rf tmpdeb/')
     system2('/bin/rm -rf ../res/DEBIAN/control')
-    os.rename('rustdesk.deb', '../rustdesk-connect_%s-1_%s.deb' % (version, get_deb_arch()))
+    os.rename('rustdesk.deb', '../rustdesk_%s-1_%s.deb' % (version, get_deb_arch()))
     os.chdir("..")
 
 
