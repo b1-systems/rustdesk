@@ -760,7 +760,8 @@ jobs:
       - build-for-macOS
       - build-for-windows-flutter
     runs-on: ubuntu-latest
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@master
