@@ -1,0 +1,21 @@
+set -e
+
+RUSTDESK_VERSION="1.4.2"
+DEBIAN_REVISION="1"
+RUSTDESK_PACKAGE_WITH_CONNECT="rustdesk-connect"
+RUSTDESK_PACKAGE_NO_CONNECT="rustdesk"
+TAG_WITH_CONNECT="tag/${RUSTDESK_VERSION}-with-connect"
+TAG_NO_CONNECT="tag/${RUSTDESK_VERSION}-no-connect"
+BASE_URL="https://api.github.com/repos/b1-systems/rustdesk/releases/tags"
+URL_WITH_CONNECT="${BASE_URL}/${TAG_WITH_CONNECT}"
+ASSET_WITH_CONNECT="${RUSTDESK_PACKAGE_WITH_CONNECT}_${RUSTDESK_VERSION}-${DEBIAN_REVISION}_amd64.deb"
+URL_NO_CONNECT="${BASE_URL}/${TAG_NO_CONNECT}"
+ASSET_NO_CONNECT="${RUSTDESK_PACKAGE_NO_CONNECT}_${RUSTDESK_VERSION}-${DEBIAN_REVISION}_amd64.deb"
+
+DOWNLOAD_URL_WITH_CONNECT=$(curl -s "${URL_WITH_CONNECT}" | \
+    jq -r ".assets[] | select(.name==\"$ASSET_WITH_CONNECT\") | .browser_download_url")
+curl -s -L "$DOWNLOAD_URL_WITH_CONNECT" -o "$ASSET_WITH_CONNECT"
+
+DOWNLOAD_URL_NO_CONNECT=$(curl -s "${URL_NO_CONNECT}" | \
+    jq -r ".assets[] | select(.name==\"$ASSET_NO_CONNECT\") | .browser_download_url")
+curl -s -L "$DOWNLOAD_URL_NO_CONNECT" -o "$ASSET_NO_CONNECT"
