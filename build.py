@@ -134,6 +134,11 @@ def make_parser():
         action='store_true',
         help='Skip cargo build process, only flutter version + Linux supported currently'
     )
+    parser.add_argument(
+        '--debian-prepare-only',
+        action='store_true',
+        help='Stop Debian Build after generating temp folder and CONTROL file and package in a tar archive'
+    )
     if windows:
         parser.add_argument(
             '--skip-portable-pack',
@@ -315,7 +320,7 @@ def ffi_bindgen_function_refactor():
         'sed -i "s/ffi.NativeFunction<ffi.Bool Function(DartPort/ffi.NativeFunction<ffi.Uint8 Function(DartPort/g" flutter/lib/generated_bridge.dart')
 
 
-def build_flutter_deb(version, features):
+def build_flutter_deb(version, features, prepare_only):
     if not skip_cargo:
         system2(f'cargo build --features {features} --lib --release')
         ffi_bindgen_function_refactor()
@@ -356,11 +361,18 @@ def build_flutter_deb(version, features):
     generate_control_file(version)
     system2('cp -a ../res/DEBIAN/* tmpdeb/DEBIAN/')
     md5_file_folder("tmpdeb/")
-    system2('dpkg-deb -b tmpdeb rustdesk.deb;')
+
+    if prepare_only:
+        # do not complete debian packaging, leave job to OBS
+        system2('tar -czf rustdesk_raw.tar.gz tmpdeb/')
+        os.rename('rustdesk_raw.tar.gz', '../rustdesk_raw.tar.gz')
+    else:
+        # finalize debian package
+        system2('dpkg-deb -b tmpdeb rustdesk.deb;')
+        os.rename('rustdesk.deb', '../rustdesk_%s-1_%s.deb' % (version, get_deb_arch()))
 
     system2('/bin/rm -rf tmpdeb/')
     system2('/bin/rm -rf ../res/DEBIAN/control')
-    os.rename('rustdesk.deb', '../rustdesk_%s-1_%s.deb' % (version, get_deb_arch()))
     os.chdir("..")
 
 
@@ -555,7 +567,7 @@ def main():
             else:
                 # system2(
                 #     'mv target/release/bundle/deb/rustdesk*.deb ./flutter/rustdesk.deb')
-                build_flutter_deb(version, features)
+                build_flutter_deb(version, features, args.debian_prepare_only)
         else:
             system2('cargo bundle --release --features ' + features)
             if osx:
