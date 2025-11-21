@@ -1,0 +1,5 @@
+<services>
+    <service name="download_url">
+        <param name="url">https://github.com/b1-systems/rustdesk/releases/download/tag%2F1.4.3-no-connect/rustdesk_raw.tar.gz</param>
+    </service>
+</services>
