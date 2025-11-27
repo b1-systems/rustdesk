@@ -1,0 +1,12 @@
+Source: rustdesk-connect
+Section: net
+Priority: optional
+Maintainer: B1 Systems GmbH <info@b1-systems.de>
+Build-Depends: debhelper (>= 10), debhelper-compat (= 13)
+Standards-Version: 4.1.3
+
+Package: rustdesk-connect
+Architecture: amd64
+Description: Remote desktop software
+ RustDesk remote desktop application.
+ Built from GitHub Actions prepared package.

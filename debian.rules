@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	tar -xzf ../SOURCES/rustdesk_raw.tar.gz
+	dpkg-deb --build tmpdeb rustdesk-connect.deb
+
+override_dh_auto_install:
+	mkdir -p debian/rustdesk
+	dpkg-deb -x rustdesk-connect.deb debian/rustdesk/
+
+override_dh_shlibdeps:
+	@echo "Skipping automatic dependency detection"
