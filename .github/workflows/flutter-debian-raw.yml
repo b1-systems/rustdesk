@@ -13,4 +13,4 @@ jobs:
     secrets: inherit
     with:
       upload-artifact: true
-      upload-tag: tag/1.4.3-with-connect
+      upload-tag: tag/1.4.4-with-connect
