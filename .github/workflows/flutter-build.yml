@@ -34,7 +34,7 @@ env:
   # vcpkg version: 2025.08.27
   # If we change the `VCPKG COMMIT_ID`, please remember:
   # 1. Call `$VCPKG_ROOT/vcpkg x-update-baseline` to update the baseline in `vcpkg.json`.
-  #  Or we may face build issue like 
+  #  Or we may face build issue like
   #  https://github.com/rustdesk/rustdesk/actions/runs/14414119794/job/40427970174
   # 2. Update the `VCPKG_COMMIT_ID` in `ci.yml` and `playground.yml`.
   VCPKG_COMMIT_ID: "120deac3062162151622ca4860575a33844ba10b"
@@ -52,6 +52,7 @@ jobs:
     uses: ./.github/workflows/bridge.yml
 
   build-RustDeskTempTopMostWindow:
+    if: false
     uses: ./.github/workflows/third-party-RustDeskTempTopMostWindow.yml
     with:
       upload-artifact: ${{ inputs.upload-artifact }}
@@ -63,6 +64,7 @@ jobs:
       fail-fast: false
 
   build-for-windows-flutter:
+    if: false
     name: ${{ matrix.job.target }}
     needs: [build-RustDeskTempTopMostWindow, generate-bridge]
     runs-on: ${{ matrix.job.os }}
@@ -286,7 +288,7 @@ jobs:
     name: ${{ matrix.job.target }} (${{ matrix.job.os }})
     runs-on: ${{ matrix.job.os }}
     # Temporarily disable this action due to additional test is needed.
-    # if: false
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -433,7 +435,8 @@ jobs:
             ./SignOutput/rustdesk-*.exe
 
   build-rustdesk-ios:
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     name: build rustdesk ios ipa
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -520,7 +523,7 @@ jobs:
         run: |
           rustup target add ${{ matrix.job.target }}
           cargo build --features flutter,hwcodec --release --target aarch64-apple-ios --lib
-          
+
       - name: Upload liblibrustdesk.a Artifacts
         uses: actions/upload-artifact@master
         with:
@@ -551,8 +554,8 @@ jobs:
       #     files: |
       #       flutter/build/ios/ipa/*.ipa
 
-
   build-for-macOS:
+    if: false
     name: ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -765,7 +768,8 @@ jobs:
       - build-for-windows-flutter
       - build-for-windows-sciter
     runs-on: ubuntu-latest
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@master
@@ -803,6 +807,7 @@ jobs:
           files: rustdesk-${{ env.VERSION }}-unsigned.tar.gz
 
   build-rustdesk-android:
+    if: false
     needs: [generate-bridge]
     name: build rustdesk android apk ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
@@ -1097,7 +1102,8 @@ jobs:
   build-rustdesk-android-universal:
     needs: [build-rustdesk-android]
     name: build rustdesk android universal apk
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     runs-on: ubuntu-24.04
     env:
       reltype: release
@@ -1294,14 +1300,6 @@ jobs:
               on: ubuntu-22.04,
               deb_arch: amd64,
               vcpkg-triplet: x64-linux,
-            }
-          - {
-              arch: aarch64,
-              target: aarch64-unknown-linux-gnu,
-              distro: ubuntu18.04,
-              on: ubuntu-22.04-arm,
-              deb_arch: arm64,
-              vcpkg-triplet: arm64-linux,
             }
     steps:
       - name: Export GitHub Actions cache environment variables
@@ -1616,7 +1614,8 @@ jobs:
             res/rustdesk-${{ env.VERSION }}*.zst
 
   build-rustdesk-linux-sciter:
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     runs-on: ${{ matrix.job.on }}
     name: build-rustdesk-linux-sciter ${{ matrix.job.target }}
     strategy:
@@ -1846,7 +1845,8 @@ jobs:
     name: Build appimage ${{ matrix.job.target }}
     needs: [build-rustdesk-linux]
     runs-on: ubuntu-22.04
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     strategy:
       fail-fast: false
       matrix:
@@ -1898,7 +1898,8 @@ jobs:
       - build-rustdesk-linux
       - build-rustdesk-linux-sciter
     runs-on: ${{ matrix.job.on }}
-    if: ${{ inputs.upload-artifact }}
+    if: false
+    # if: ${{ inputs.upload-artifact }}
     strategy:
       fail-fast: false
       matrix:
