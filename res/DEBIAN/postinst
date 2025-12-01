@@ -26,5 +26,6 @@ if [ "$1" = configure ]; then
 
 		# ensure rustdesk service is NOT running on startup
 		systemctl disable rustdesk
-		systemctl stop rustdesk	fi
+		systemctl stop rustdesk
+	fi
 fi
