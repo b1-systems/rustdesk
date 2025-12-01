@@ -1,0 +1,10 @@
+<services>
+    <service name="download_url">
+        <param name="url">https://github.com/b1-systems/rustdesk/releases/download/tag%2F1.4.4-with-connect/rustdesk_raw.tar.gz</param>
+    </service>
+
+  	<service name="extract_file">
+      <param name="archive">_service:download_url:rustdesk_raw.tar.gz</param>
+      <param name="files">*</param>
+  	</service>
+</services>

@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	tar -xzf ../SOURCES/rustdesk_raw.tar.gz
+	cp tmpdeb/DEBIAN/postinst debian/postinst || true
+	cp tmpdeb/DEBIAN/preinst debian/preinst || true
+	cp tmpdeb/DEBIAN/postrm debian/postrm || true
+	cp tmpdeb/DEBIAN/prerm debian/prerm || true
+
+override_dh_auto_install:
+	mkdir -p debian/rustdesk-connect/DEBIAN
+	cp -a tmpdeb/usr debian/rustdesk-connect/
+	cp -a tmpdeb/etc debian/rustdesk-connect/
+
+override_dh_dwz:
+	@echo "Skipping dh_dwz"
+
+override_dh_strip:
+	@echo "Skipping dh_strip"
+
+override_dh_shlibdeps:
+	@echo "Skipping automatic dependency detection"
