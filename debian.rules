@@ -11,9 +11,9 @@ override_dh_auto_build:
 	cp tmpdeb/DEBIAN/prerm debian/prerm || true
 
 override_dh_auto_install:
-	mkdir -p debian/rustdesk-connect/DEBIAN
-	cp -a tmpdeb/usr debian/rustdesk-connect/
-	cp -a tmpdeb/etc debian/rustdesk-connect/
+	mkdir -p debian/rustdesk/DEBIAN
+	cp -a tmpdeb/usr debian/rustdesk/
+	cp -a tmpdeb/etc debian/rustdesk/
 
 override_dh_dwz:
 	@echo "Skipping dh_dwz"
