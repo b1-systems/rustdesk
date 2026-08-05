@@ -135,6 +135,11 @@ def make_parser():
         action='store_true',
         help='Skip cargo build process, only flutter version + Linux supported currently'
     )
+    parser.add_argument(
+        "--debian-prepare-only",
+        action="store_true",
+        help="Stop Debian Build after generating temp folder and CONTROL file and package in a tar archive",
+    )
     if windows:
         parser.add_argument(
             '--skip-portable-pack',
