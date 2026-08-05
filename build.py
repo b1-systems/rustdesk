@@ -376,7 +376,6 @@ def build_flutter_deb(version, features, prepare_only):
 
     system2('/bin/rm -rf tmpdeb/')
     system2('/bin/rm -rf ../res/DEBIAN/control')
-    os.rename("rustdesk.deb", "../rustdesk-connect_%s-1_%s.deb" % (version, get_deb_arch()))
     os.chdir("..")
 
 
