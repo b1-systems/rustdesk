@@ -362,7 +362,7 @@ def generate_control_file(version):
     control_file_path = "../res/DEBIAN/control"
     system2('/bin/rm -rf %s' % control_file_path)
 
-    content = """Package: rustdesk-connect
+    content = """Package: rustdesk
 Section: net
 Priority: optional
 Version: %s
@@ -794,7 +794,7 @@ def build_flutter_deb(version, features, prepare_only):
         system2("dpkg-deb -b tmpdeb rustdesk.deb;")
         os.rename(
             "rustdesk.deb",
-            "../rustdesk-connect_%s-1_%s.deb" % (version, get_deb_arch()),
+            "../rustdesk_%s-1_%s.deb" % (version, get_deb_arch()),
         )
 
     system2('/bin/rm -rf tmpdeb/')
@@ -939,7 +939,7 @@ def build_deb_from_folder(version, binary_folder, want_drm=False):
 
     system2('/bin/rm -rf tmpdeb/')
     system2('/bin/rm -rf ../res/DEBIAN/control')
-    os.rename("rustdesk.deb", "../rustdesk-connect_%s-1_%s.deb" % (version, get_deb_arch()))
+    os.rename("rustdesk.deb", "../rustdesk_%s-1_%s.deb" % (version, get_deb_arch()))
     if want_drm:
         os.rename('../rustdesk-%s.deb' % version, f'../{DRM_PACKAGE_NAME}-{version}.deb')
     os.chdir("..")
